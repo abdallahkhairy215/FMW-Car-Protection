@@ -122,40 +122,42 @@ $(document).ready(function () {
   const $handle = $('#compareHandle');
   let isDragging = false;
 
-  function setComparePosition(x) {
-    const rect = $container[0].getBoundingClientRect();
-    let pos = ((x - rect.left) / rect.width) * 100;
-    pos = Math.max(2, Math.min(98, pos));
-    $before.css('width', pos + '%');
-    $handle.css('left', pos + '%');
+  if ($container.length) {
+    function setComparePosition(x) {
+      const rect = $container[0].getBoundingClientRect();
+      let pos = ((x - rect.left) / rect.width) * 100;
+      pos = Math.max(2, Math.min(98, pos));
+      $before.css('width', pos + '%');
+      $handle.css('left', pos + '%');
+    }
+
+    // Mouse events
+    $handle.on('mousedown touchstart', function (e) {
+      isDragging = true;
+      e.preventDefault();
+    });
+
+    $(document).on('mousemove touchmove', function (e) {
+      if (!isDragging) return;
+      const x = e.type === 'touchmove' ? e.originalEvent.touches[0].clientX : e.clientX;
+      setComparePosition(x);
+    });
+
+    $(document).on('mouseup touchend', function () {
+      isDragging = false;
+    });
+
+    // Click on container also moves slider
+    $container.on('click', function (e) {
+      setComparePosition(e.clientX);
+    });
+
+    // Initialize at 50%
+    setTimeout(() => {
+      const rect = $container[0].getBoundingClientRect();
+      setComparePosition(rect.left + rect.width * 0.5);
+    }, 300);
   }
-
-  // Mouse events
-  $handle.on('mousedown touchstart', function (e) {
-    isDragging = true;
-    e.preventDefault();
-  });
-
-  $(document).on('mousemove touchmove', function (e) {
-    if (!isDragging) return;
-    const x = e.type === 'touchmove' ? e.originalEvent.touches[0].clientX : e.clientX;
-    setComparePosition(x);
-  });
-
-  $(document).on('mouseup touchend', function () {
-    isDragging = false;
-  });
-
-  // Click on container also moves slider
-  $container.on('click', function (e) {
-    setComparePosition(e.clientX);
-  });
-
-  // Initialize at 50%
-  setTimeout(() => {
-    const rect = $container[0].getBoundingClientRect();
-    setComparePosition(rect.left + rect.width * 0.5);
-  }, 300);
 
   /* ================================================
      3. PORTFOLIO FILTER TABS
