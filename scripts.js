@@ -8,23 +8,23 @@ $(document).ready(function () {
   /* ================================================
      1. LENIS SMOOTH SCROLL INITIALIZATION
   ================================================ */
-  // const lenis = new Lenis({
-  //   duration: 1.2,
-  //   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easeOutExpo
-  //   direction: 'vertical',
-  //   gestureDirection: 'vertical',
-  //   smooth: true,
-  //   mouseMultiplier: 1,
-  //   smoothTouch: false,
-  //   touchMultiplier: 1.5,
-  //   infinite: false,
-  // });
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easeOutExpo
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 1.5,
+    infinite: false,
+  });
 
-  // function raf(time) {
-  //   lenis.raf(time);
-  //   requestAnimationFrame(raf);
-  // }
-  // requestAnimationFrame(raf);
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
 
   /* ================================================
      2. NAVBAR & BACK TO TOP - Scroll behavior (Optimized via Lenis scroll event)
